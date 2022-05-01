@@ -1,5 +1,5 @@
 # RSGL-Calculator
-RSGL-2048 is a clone the gnome-calculator but made with RSGL
+RSGL-Calculator is a clone the gnome-calculator made with RSGL
 
 # How To Install
 1) Install RSGL and RSGLMake (if needed)
