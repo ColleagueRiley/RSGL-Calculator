@@ -1,0 +1,31 @@
+SOURCE += source/*.cpp source/*.o
+LIBS += -lRSGL
+GXX = g++
+OUTPUT = RSGL-Calculator
+
+!path(./source/parser.o){
+    bash{
+		g++ -c source/parser/*.cpp -o source/parser.o
+	}
+}
+
+test{
+    pash{
+		./$(OUTPUT)
+	}
+}
+
+BIN ~= /usr/bin
+
+install{
+    pash{
+		sudo mv $(OUTPUT) $(BIN)
+		sudo cp res/rsgl.Calculator.desktop /usr/share/applications/ 
+	}
+}
+
+installFont{
+    pash{
+		sudo mv res/fonts/DejaVuSans.ttf /usr/share/fonts/TTF/
+	}
+}
