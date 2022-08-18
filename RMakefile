@@ -1,5 +1,5 @@
 SOURCE += source/*.cpp source/*.o
-LIBS += -lRSGL
+LIBS += $(RSGL-static)
 GXX = g++
 OUTPUT = RSGL-Calculator
 

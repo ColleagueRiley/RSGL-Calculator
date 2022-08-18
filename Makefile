@@ -1,13 +1,15 @@
-all:
-        echo run `make RSGL` to install RSGL
-        echo run `make RSGLMake` to install RSGLMake
+OUTPUT = RSGL-Calculator
+GXX = g++
+SOURCE = source/*.cpp source/*.o
+LIBS = $(shell RSGL-static)
 
-RSGL:
-	git clone https://github.com/ColleagueRiley/RSGL.git
-	cd RSGL && sudo make install
-	rm -r RSGL
+build:
+	mkdir -p build
+	$(GXX) $(SOURCE) $(LIBS) -o build/$(OUTPUT)
+	cp -r res ./build
 
-RSGLMake:
-	git clone https://github.com/RSGL-org/RSGL-Make.git
-	cd RSGL-Make && sudo make install
-	sudo rm -r RSGL-Make
+install:
+	chmod +x $(OUTPUT)
+	cp $(OUTPUT) /usr/bin
+	mkdir -p /usr/share/$(OUTPUT)
+	cp -r build/* /usr/share/$(OUTPUT)

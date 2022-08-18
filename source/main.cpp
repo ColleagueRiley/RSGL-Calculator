@@ -15,11 +15,11 @@ struct button{
 };
 
 void button::events(){
-	if (win.event.type == RSGL::MouseButtonPressed && RSGL::RectCollidePoint(r,{win.event.x,win.event.y}) || clicked){ color = clickC; clicked=true;}
-	else if (RSGL::RectCollidePoint(r,{win.event.x,win.event.y})) color = hoverC;
+	if (win.event.type == RSGL::MouseButtonPressed && RSGL::RectCollidePoint(r,{win.event.mouse.x,win.event.mouse.y}) || clicked){ color = clickC; clicked=true;}
+	else if (RSGL::RectCollidePoint(r,{win.event.mouse.x,win.event.mouse.y})) color = hoverC;
 	else color=c;
 	if (win.event.type == RSGL::MouseButtonReleased) clicked=false;
-	if (win.event.type == RSGL::MouseButtonReleased && RSGL::RectCollidePoint(r,{win.event.x,win.event.y})) pressed=true;
+	if (win.event.type == RSGL::MouseButtonReleased && RSGL::RectCollidePoint(r,{win.event.mouse.x,win.event.mouse.y})) pressed=true;
 	else pressed=false;
 }
 
@@ -74,11 +74,11 @@ int main(){
 				for (int j=0; j < 10; j++) text+= answers2.at(i).at(j);
 				RSGL::drawText( text+"...",{320 - (11*(10-1)),(92 - i*35) + y,20},"/usr/share/fonts/TTF/DejaVuSans.ttf",{200,188,188});
 			}
-			if (win.event.type == RSGL::MouseButtonReleased && RSGL::RectCollidePoint({10,(92 - i*35) + y,20 * (int)answers.at(i).size(),20},{win.event.x,win.event.y})){
+			if (win.event.type == RSGL::MouseButtonReleased && RSGL::RectCollidePoint({10,(92 - i*35) + y,20 * (int)answers.at(i).size(),20},{win.event.mouse.x,win.event.mouse.y})){
 				textBox += answers.at(i);
 			}
-			else if (win.event.type == RSGL::MouseButtonReleased && RSGL::RectCollidePoint({320 - (11*(10-1)),(92 - i*35) + y,20,20* (int)answers.at(i).size()},{win.event.x,win.event.y}) ||
-				win.event.type == RSGL::MouseButtonReleased && RSGL::RectCollidePoint({320 - (11*((int)answers2.at(i).size()-1)),(92 - i*35) + y,20,20* (int)answers.at(i).size()},{win.event.x,win.event.y})){
+			else if (win.event.type == RSGL::MouseButtonReleased && RSGL::RectCollidePoint({320 - (11*(10-1)),(92 - i*35) + y,20,20* (int)answers.at(i).size()},{win.event.mouse.x,win.event.mouse.y}) ||
+				win.event.type == RSGL::MouseButtonReleased && RSGL::RectCollidePoint({320 - (11*((int)answers2.at(i).size()-1)),(92 - i*35) + y,20,20* (int)answers.at(i).size()},{win.event.mouse.x,win.event.mouse.y})){
 				textBox += answers2.at(i);
 			}
 		}
@@ -86,13 +86,13 @@ int main(){
 		RSGL::drawRect({0,115,350,1},{0,0,0});
 		RSGL::drawRect({0,180,350,200},{34,34,34});
 		RSGL::drawRect({0,180,350,1},{0,0,0});
-		RSGL::drawRect(answerScroll.r,answerScroll.color);
+		RSGL::drawRoundRect(answerScroll.r,answerScroll.color);
 		if (textBox.size() > 30) x1 = 11*(textBox.size()-30);
 		else x1=0;
 		RSGL::drawText(textBox,{10-x1,130,20},"/usr/share/fonts/TTF/DejaVuSans.ttf",{200,188,188});
 		for (int i=0; i < buttons.size(); i++){ 
 			buttons.at(i).events();
-			RSGL::drawRect(buttons.at(i).r,buttons.at(i).color); RSGL::drawRect(buttons.at(i).r,{0,0,0},false);
+			RSGL::drawRoundRect(buttons.at(i).r,buttons.at(i).color); RSGL::drawRoundRect(buttons.at(i).r,{0,0,0},false);
 			int x2=20, y2=4;
 			if (i == buttons.size()-1){ x2=30; y2=-4; }
 			RSGL::drawText(buttons.at(i).text,{ buttons.at(i).r.x+x2, buttons.at(i).r.y+y2, (int)(buttons.at(i).r.width/2.5) },"/usr/share/fonts/TTF/DejaVuSans.ttf",{255,255,255});
@@ -146,11 +146,11 @@ int main(){
 				}
 				break; 
 			case RSGL::MousePosChanged:
-				if (win.event.y > 115) answerScroll.c.a = 0;
+				if (win.event.mouse.y > 115) answerScroll.c.a = 0;
 				else answerScroll.c.a = 225;
-				if (pmouseY < win.event.y && answerScroll.clicked && answerScroll.r.y+3 <= 64 && answery > 0){ answerScroll.r.y += 3; answery--; }
-				else if (pmouseY > win.event.y && answerScroll.clicked && answerScroll.r.y-6 >= 0 && answery < answers.size()-3){ answerScroll.r.y -= 3; answery++; }
-				pmouseY = win.event.y;
+				if (pmouseY < win.event.mouse.y && answerScroll.clicked && answerScroll.r.y+3 <= 64 && answery > 0){ answerScroll.r.y += 3; answery--; }
+				else if (pmouseY > win.event.mouse.y && answerScroll.clicked && answerScroll.r.y-6 >= 0 && answery < answers.size()-3){ answerScroll.r.y -= 3; answery++; }
+				pmouseY = win.event.mouse.y;
 				break;
 			case RSGL::MouseButtonReleased:
 				if (win.event.button == RSGL::mouseScrollUp){ if (answery < answers.size()-3) answery+=1;}
