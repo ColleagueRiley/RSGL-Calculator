@@ -4,9 +4,13 @@ SOURCE = source/*.cpp source/*.o
 LIBS = $(shell RSGL-static)
 
 build:
+	make source/parser.o
 	mkdir -p build
 	$(GXX) $(SOURCE) $(LIBS) -o build/$(OUTPUT)
 	cp -r res ./build
+
+source/parser.o:
+	$(GXX) source/parser/parser.cpp -c -o source/parser.o
 
 install:
 	chmod +x $(OUTPUT)
